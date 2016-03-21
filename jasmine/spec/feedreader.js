@@ -26,7 +26,6 @@ $(function() {
             expect(allFeeds.length).not.toBe(0);
         });
 
-
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
@@ -52,7 +51,6 @@ $(function() {
         });
     });
 
-
     /* TODO: Write a new test suite named "The menu" */
     describe('The Menu', function() {
         /* TODO: Write a test that ensures the menu element is
@@ -63,19 +61,22 @@ $(function() {
         it('is hidden by default.', function() {
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
+
          /* TODO: Write a test that ensures the menu changes
           * visibility when the menu icon is clicked. This test
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
         it('changes visibility when the menu icon is clicked.', function() {
+            // First, trigger a click on the menu icon and check if the menu-hidden class is removed...
             $('.menu-icon-link').trigger('click');
             expect($('body').hasClass('menu-hidden')).not.toBe(true);
-
+            // ... then, trigger a click on the menu icon and check if the menu-hidden class is added.
             $('.menu-icon-link').trigger('click');
             expect($('body').hasClass('menu-hidden')).toBe(true);
         });
     });
+
     /* TODO: Write a new test suite named "Initial Entries" */
     describe('Initial Entries', function() {
         /* TODO: Write a test that ensures when the loadFeed
@@ -84,7 +85,6 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-
         beforeEach(function(done){ 
              loadFeed(0, function(){
                 done();
@@ -103,22 +103,24 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-
          var firstHeaderContent;
 
          beforeEach(function(done){ 
+             // Load the first feed and store the first piece of content for later comparison.
              loadFeed(0, function(){
-                firstHeaderContent = $('p').text;
+                firstHeaderContent = $('h2 p').first().text();
                 done();
              });
+             // Load the second feed.
              loadFeed(1, function(){
                 done();
              });
         });
 
         it('should have its content changed when a new feed is loaded.', function(done, firstHeaderContent) {
-            var updatedHeaderContent = $('p').text;
-            expect(firstHeaderContent == updatedHeaderContent).not.toBe(true);
+            // Get the contnet of the second feed and check if it is different.
+            var updatedHeaderContent = $('h2 p').first().text();
+            expect(firstHeaderContent === updatedHeaderContent).not.toBe(true);
             done();
         });
     });
