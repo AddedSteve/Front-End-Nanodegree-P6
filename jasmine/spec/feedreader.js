@@ -108,7 +108,7 @@ $(function() {
          beforeEach(function(done){ 
              // Load the first feed and store the first piece of content for later comparison.
              loadFeed(0, function(){
-                firstHeaderContent = $('.entry h2 p').first().text();
+                firstHeaderContent = $('.entry h2').first().text();
                 // Load the second feed.
                  loadFeed(1, function(){
                     done();
@@ -117,9 +117,10 @@ $(function() {
              
         });
 
-        it('should have its content changed when a new feed is loaded.', function(done, firstHeaderContent) {
+
+        it('should have its content changed when a new feed is loaded.', function(done) {
             // Get the contnet of the second feed and check if it is different.
-            var updatedHeaderContent = $('h2 p').first().text();
+            var updatedHeaderContent = $('.entry h2').first().text();
             expect(firstHeaderContent).not.toEqual(updatedHeaderContent);
             done();
         });
